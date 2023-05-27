@@ -1,19 +1,14 @@
 import {ChangeEvent} from "react";
 
 interface TopInputProps{
-    getAlbumes: (isSearching: boolean, query?: string) => void
+    onHandleChange: (query: string) => void
 }
 
-const TopInput = ({getAlbumes}: TopInputProps) => {
+const TopInput = ({onHandleChange} : TopInputProps)  => {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        if(value !== ""){
-            getAlbumes(true, value)
-        }
-        else{
-            getAlbumes(false)
-        }
+        onHandleChange(value)
     }
 
   return (
@@ -23,7 +18,7 @@ const TopInput = ({getAlbumes}: TopInputProps) => {
         name="query"
         className="w-3/4 md:w-3/6 rounded p-2 border-0 outline-none text-skin-alter bg-skin-top placeholder:text-skin-ph"
         type="text"
-        placeholder="Busca álbumes..."
+        placeholder="Search albums..."
       />
     </div>
   );

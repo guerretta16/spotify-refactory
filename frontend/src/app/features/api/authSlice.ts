@@ -21,4 +21,4 @@ export const authSlice = createApi({
     }),
 })
 
-export const {useGetAccessTokenQuery} = authSlice
+export const {useGetAccessTokenQuery, useLazyGetAccessTokenQuery} = authSlice

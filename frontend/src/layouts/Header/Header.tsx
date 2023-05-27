@@ -1,18 +1,14 @@
-import { persistor } from "../../app/store";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { reset as resetToken } from "../../app/features/auth/spotifyToken";
-import { reset as resetUser} from "../../app/features/auth/userSlice";
 import { Link } from "react-router-dom";
+import {removeTokens} from "../../app/features/slices/tokenSlice.ts";
 
  const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const handleLogoutClick = () => {
-    persistor.purge();
-    dispatch(resetToken());
-    dispatch(resetUser());
+    dispatch(removeTokens());
     navigate('/', {replace:true});
   }
 

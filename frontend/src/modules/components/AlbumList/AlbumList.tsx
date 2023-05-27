@@ -1,27 +1,32 @@
-import { AlbumRef } from "../../../utils/interfaces";
-import { AlbumCard } from "..";
+import {AlbumCard} from "../index";
+import {IAlbum} from "../../../utils/interfaces/spotifyAuthType";
 
-interface AlbumListProp {
-  albumes: Array<AlbumRef>;
-  registerFavoriteAlbum?: (albumInfo: AlbumRef) => void;
-  deleteAlbum?: (id_album: string, user_id: string) => void;
-  handleModal?: (id_album: string) => void
+interface IListProp {
+    items: IAlbum[];
+    onAddFavorites?: (item: IAlbum) => void;
+    onDelete?: (id: string) => void;
+    handleModal?: (id: string) => void
 }
 
-const AlbumList = ({ albumes, registerFavoriteAlbum, deleteAlbum, handleModal }: AlbumListProp) => {
-  return (
-    <div className="flex flex-wrap gap-8 justify-center md:w-5/6 m-auto my-10">
-      {albumes.map((album: AlbumRef) => (
-        <AlbumCard
-          key={album.id_album}
-          album={album}
-          registerFavoriteAlbum={registerFavoriteAlbum!}
-          deleteAlbum={deleteAlbum!}
-          handleModal={handleModal!}
-        />
-      ))}
-    </div>
-  );
-};
+function AlbumList({items, onAddFavorites, onDelete, handleModal}: IListProp) {
+
+    const itemsWithoutDuplicates = items ? items.filter((value, index, self) => index === self.findIndex(obj => obj.id === value.id)) : []
+
+    return (
+            <div className="flex flex-wrap gap-8 justify-center md:w-5/6 m-auto my-10">
+                {
+                    itemsWithoutDuplicates ? itemsWithoutDuplicates.map((item) => (
+                            <AlbumCard
+                                    key={item.id}
+                                    item={item}
+                                    onAddFavorites={onAddFavorites}
+                                    onDelete={onDelete}
+                                    handleModal={handleModal}
+                            />
+                    )) : null
+                }
+            </div>
+    );
+}
 
 export default AlbumList;
